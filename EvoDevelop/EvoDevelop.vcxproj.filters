@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{f9178d09-5adf-4446-b322-4e5aa679a05c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compute">
+      <UniqueIdentifier>{f0be5945-9307-4255-bd11-26ef9efddbb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compute\InitialPopulation">
+      <UniqueIdentifier>{71e72028-9310-4371-9600-c4a46b2afe43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compute\InitialPopulation\Opt">
+      <UniqueIdentifier>{0ff43e61-ff9a-4828-bfc3-2c162c2f06c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compute\InitialPopulation\Kruskal">
+      <UniqueIdentifier>{22998dd3-5178-47c5-8ccb-31f171ccaaa0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshDefinition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Compute\Evolution.cpp">
+      <Filter>Source Files\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Compute\Individual.cpp">
+      <Filter>Source Files\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Compute\SegMesh.cpp">
+      <Filter>Source Files\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Compute\InitialPopulation\ConesFlattening.cpp">
+      <Filter>Source Files\Compute\InitialPopulation</Filter>
+    </ClCompile>
+    <ClCompile Include="Compute\InitialPopulation\VSA_cone.cpp">
+      <Filter>Source Files\Compute\InitialPopulation</Filter>
+    </ClCompile>
+    <ClCompile Include="Compute\InitialPopulation\Kruskal\Auxiliary.cpp">
+      <Filter>Source Files\Compute\InitialPopulation\Kruskal</Filter>
+    </ClCompile>
+    <ClCompile Include="Compute\InitialPopulation\Kruskal\MeshCache.cpp">
+      <Filter>Source Files\Compute\InitialPopulation\Kruskal</Filter>
+    </ClCompile>
+    <ClCompile Include="Compute\Distortion.cpp">
+      <Filter>Source Files\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Compute\EnergyUpdate.cpp">
+      <Filter>Source Files\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Compute\TopoChange.cpp">
+      <Filter>Source Files\Compute</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MeshDefinition.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\Evolution.h">
+      <Filter>Source Files\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\Individual.h">
+      <Filter>Source Files\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\SegMesh.h">
+      <Filter>Source Files\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\InitialPopulation\ConesFlattening.h">
+      <Filter>Source Files\Compute\InitialPopulation</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\InitialPopulation\VSA_cone.h">
+      <Filter>Source Files\Compute\InitialPopulation</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\InitialPopulation\Opt\AndersonAcceleration.h">
+      <Filter>Source Files\Compute\InitialPopulation\Opt</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\InitialPopulation\Opt\DRSplitting.hpp">
+      <Filter>Source Files\Compute\InitialPopulation\Opt</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\InitialPopulation\Opt\OMPHelper.h">
+      <Filter>Source Files\Compute\InitialPopulation\Opt</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\InitialPopulation\Opt\Types.h">
+      <Filter>Source Files\Compute\InitialPopulation\Opt</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\InitialPopulation\Opt\WeightedL1DR.hpp">
+      <Filter>Source Files\Compute\InitialPopulation\Opt</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\InitialPopulation\Kruskal\Auxiliary.h">
+      <Filter>Source Files\Compute\InitialPopulation\Kruskal</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\InitialPopulation\Kruskal\MeshCache.h">
+      <Filter>Source Files\Compute\InitialPopulation\Kruskal</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\Distortion.h">
+      <Filter>Source Files\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\EnergyUpdate.h">
+      <Filter>Source Files\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute\TopoChange.h">
+      <Filter>Source Files\Compute</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
