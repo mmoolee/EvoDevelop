@@ -1,7 +1,13 @@
 EvoDevelop
 ===
 
-This is a C++ implementation of our evolutional genetic algorithm by using Microsoft Visual Studio 2019, with OpenMP support for parallel programming.
+This is a C++ implementation of the piecewise developable approximation in the following paper:
+
+[Evolutionary Piecewise Developable Approximations](https://doi.org/10.1145/3592140).
+Zheng-Yu Zhao\*, Mo Li\*, Zheng Zhang, [Qing Fang](https://qingfang1208.github.io/)\*, [Ligang Liu](http://staff.ustc.edu.cn/~lgliu/), [Xiao-Ming Fu](https://ustc-gcl-f.github.io/).
+*ACM Transactions on Graphics (SIGGRAPH)*, 42(4), 2023. (*Joint first authors)
+
+The code is written by using Microsoft Visual Studio 2019, with OpenMP support for parallel programming.
 
 ## Dependencies
 * [OpenMesh](https://www.graphics.rwth-aachen.de/software/openmesh/)
