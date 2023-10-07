@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <cctype>
+#include <algorithm>
 
 bool MeshTools::ReadMesh(Mesh & mesh, const std::string & filename)
 {
@@ -33,7 +34,7 @@ bool MeshTools::ReadMesh(Mesh & mesh, const std::string & filename)
 		ext = basename.substr(point + 1);
 		basename = basename.substr(0, point);
 	}
-	std::transform(ext.begin(), ext.end(), ext.begin(), std::tolower);
+	std::transform(ext.begin(), ext.end(), ext.begin(), [](auto c) { return std::tolower(c); });
 	if (ext == "obj")
 	{
 		return ReadOBJ(mesh, path + "/" + basename + "." + ext);
@@ -250,7 +251,7 @@ bool MeshTools::WriteMesh(const Mesh & mesh, const std::string & filename, const
 		ext = basename.substr(point + 1);
 		basename = basename.substr(0, point);
 	}
-	std::transform(ext.begin(), ext.end(), ext.begin(), std::tolower);
+	std::transform(ext.begin(), ext.end(), ext.begin(), [](auto c) { return std::tolower(c); });
 	if (ext == "obj")
 	{
 		return WriteOBJ(mesh, path + "/" + basename + "." + ext, precision);

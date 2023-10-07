@@ -1,5 +1,5 @@
 #include "Evolution.h"
-#include <io.h>
+#include <omp.h>
 
 const int N_ARCHIVE = 50;
 const int N_ARCHIVE_REPLACE = 0;
@@ -69,14 +69,14 @@ void Evolution::DebugPath(const std::string& path)
 	std::cout << "Create Output Dir" << std::endl;
 
 	ROOT_PATH = path;
-	PATH_INITIAL  = path + "\\initial";
-	PATH_ARCHIVE = path + "\\archive";
-	PATH_SELECTION = path + "\\selection";
-	PATH_CROSSOVER = path + "\\crossover";
-	PATH_MUTATION = path + "\\mutation";
-	PATH_POPULATION = path + "\\population";
+	PATH_INITIAL  = path + "/initial";
+	PATH_ARCHIVE = path + "/archive";
+	PATH_SELECTION = path + "/selection";
+	PATH_CROSSOVER = path + "/crossover";
+	PATH_MUTATION = path + "/mutation";
+	PATH_POPULATION = path + "/population";
 
-
+#if 0
 	if (_access(PATH_INITIAL.c_str(), 0) == -1)
 	{
 		std::string cmd = "mkdir " + PATH_INITIAL;
@@ -88,6 +88,17 @@ void Evolution::DebugPath(const std::string& path)
 		std::string cmd = "mkdir " + PATH_ARCHIVE;
 		system(cmd.c_str());
 	}
+#else
+	if (!std::filesystem::exists(PATH_INITIAL))
+	{
+		std::filesystem::create_directory(PATH_INITIAL);
+	}
+
+	if (!std::filesystem::exists(PATH_ARCHIVE))
+	{
+		std::filesystem::create_directory(PATH_ARCHIVE);
+	}
+#endif
 
 	//if (_access(PATH_SELECTION.c_str(), 0) == -1)
 	//{
@@ -144,7 +155,7 @@ void Evolution::Run(double bound, int cone_size)
 
 	//system("pause");
 
-	std::ofstream output_fitness(ROOT_PATH + "\\fitness_output.txt");
+	std::ofstream output_fitness(ROOT_PATH + "/fitness_output.txt");
 
 	// Evolution
 	int cont = 0;
@@ -165,7 +176,7 @@ void Evolution::Run(double bound, int cone_size)
 		
 		//SegMesh seg_mesh(mesh_);
 		//seg_mesh.SetSeam(archive_[0]->seam_status_);
-		//seg_mesh.OutputSeg(ROOT_PATH + "\\iter_" + std::to_string(cont) + ".txt");
+		//seg_mesh.OutputSeg(ROOT_PATH + "/iter_" + std::to_string(cont) + ".txt");
 
 		StochasticSelection();
 
@@ -204,8 +215,8 @@ void Evolution::Run(double bound, int cone_size)
 
 	SegMesh seg_mesh(mesh_);
 	seg_mesh.SetSeam(archive_[0]->seam_status_);
-	seg_mesh.OutputSeg(ROOT_PATH + "\\output_seg.txt");
-	seg_mesh.OutputMesh(ROOT_PATH + "\\output_mesh.obj");
+	seg_mesh.OutputSeg(ROOT_PATH + "/output_seg.txt");
+	seg_mesh.OutputMesh(ROOT_PATH + "/output_mesh.obj");
 }
 
 void Evolution::FaceAngle()
@@ -343,9 +354,9 @@ void Evolution::RandomMutation(const int& cont)
 
 			if (seg_mesh.HighGenus())
 			{
-				copy_seg.OutputSeg(ROOT_PATH + "\\mutate_" + std::to_string(cont)
+				copy_seg.OutputSeg(ROOT_PATH + "/mutate_" + std::to_string(cont)
 					+ "_ori_seg.txt");
-				seg_mesh.OutputSeg(ROOT_PATH + "\\mutate_" + std::to_string(cont)
+				seg_mesh.OutputSeg(ROOT_PATH + "/mutate_" + std::to_string(cont)
 					+ "_high_genus_"
 					+ std::to_string(temp_type) + ".txt");
 			}
@@ -417,9 +428,9 @@ void Evolution::RandomMutation(const int& cont)
 
 			if (seg_mesh.HighGenus())
 			{
-				copy_seg.OutputSeg(ROOT_PATH + "\\mutate_" + std::to_string(cont)
+				copy_seg.OutputSeg(ROOT_PATH + "/mutate_" + std::to_string(cont)
 					+ "_ori_seg.txt");
-				seg_mesh.OutputSeg(ROOT_PATH + "\\mutate_" + std::to_string(cont)
+				seg_mesh.OutputSeg(ROOT_PATH + "/mutate_" + std::to_string(cont)
 					+ "_high_genus_"
 					+ std::to_string(temp_type) + ".txt");
 			}
@@ -467,7 +478,7 @@ void Evolution::RandomMutation(const int& cont)
 				}
 				else if (archive_[parent_[pop_id]]->seam_energy_.narrow_cont_ > 0)
 				{
-					//copy_seg.OutputSeg(ROOT_PATH + "\\mutate_" + std::to_string(cont)
+					//copy_seg.OutputSeg(ROOT_PATH + "/mutate_" + std::to_string(cont)
 					//	+ "_narrow.txt");
 
 					for (int i = 0; i < N_RANDOM_TRY; i++)
@@ -480,7 +491,7 @@ void Evolution::RandomMutation(const int& cont)
 						}
 					}
 
-					//seg_mesh.OutputSeg(ROOT_PATH + "\\mutate_" + std::to_string(cont)
+					//seg_mesh.OutputSeg(ROOT_PATH + "/mutate_" + std::to_string(cont)
 					//	+ "_after_narrow.txt");
 				}
 				else
@@ -510,9 +521,9 @@ void Evolution::RandomMutation(const int& cont)
 
 			if (seg_mesh.HighGenus())
 			{
-				copy_seg.OutputSeg(ROOT_PATH + "\\mutate_" + std::to_string(cont)
+				copy_seg.OutputSeg(ROOT_PATH + "/mutate_" + std::to_string(cont)
 					+ "_ori_seg.txt");
-				seg_mesh.OutputSeg(ROOT_PATH + "\\mutate_" + std::to_string(cont)
+				seg_mesh.OutputSeg(ROOT_PATH + "/mutate_" + std::to_string(cont)
 					+ "_high_genus_"
 					+ std::to_string(temp_type) + ".txt");
 			}
@@ -547,7 +558,7 @@ void Evolution::RandomMutation(const int& cont)
 				//}
 				//else if (archive_[parent_[pop_id]]->seam_energy_.narrow_cont_ > 0)
 				//{
-				//	//copy_seg.OutputSeg(ROOT_PATH + "\\mutate_" + std::to_string(cont)
+				//	//copy_seg.OutputSeg(ROOT_PATH + "/mutate_" + std::to_string(cont)
 				//	//	+ "_narrow.txt");
 
 				//	for (int i = 0; i < N_RANDOM_TRY; i++)
@@ -560,7 +571,7 @@ void Evolution::RandomMutation(const int& cont)
 				//		}
 				//	}
 
-				//	//seg_mesh.OutputSeg(ROOT_PATH + "\\mutate_" + std::to_string(cont)
+				//	//seg_mesh.OutputSeg(ROOT_PATH + "/mutate_" + std::to_string(cont)
 				//	//	+ "_after_narrow.txt");
 				//}
 				//else
@@ -613,9 +624,9 @@ void Evolution::RandomMutation(const int& cont)
 
 			if (seg_mesh.HighGenus())
 			{
-				copy_seg.OutputSeg(ROOT_PATH + "\\mutate_" + std::to_string(cont)
+				copy_seg.OutputSeg(ROOT_PATH + "/mutate_" + std::to_string(cont)
 					+ "_ori_seg.txt");
-				seg_mesh.OutputSeg(ROOT_PATH + "\\mutate_" + std::to_string(cont)
+				seg_mesh.OutputSeg(ROOT_PATH + "/mutate_" + std::to_string(cont)
 					+ "_high_genus_"
 					+ std::to_string(temp_type) + ".txt");
 			}
@@ -720,11 +731,11 @@ void Evolution::Crossover(const int& cont)
 				{
 					SegMesh worse_seg(mesh_, archive_[worse_id]->seam_status_);
 
-					worse_seg.OutputSeg(ROOT_PATH + "\\cross_" + std::to_string(cont)
+					worse_seg.OutputSeg(ROOT_PATH + "/cross_" + std::to_string(cont)
 						+ "_worse_seg.txt");
-					better_seg.OutputSeg(ROOT_PATH + "\\cross_" + std::to_string(cont)
+					better_seg.OutputSeg(ROOT_PATH + "/cross_" + std::to_string(cont)
 						+ "_better_seg.txt");
-					new_seg.OutputSeg(ROOT_PATH + "\\cross_" + std::to_string(cont)
+					new_seg.OutputSeg(ROOT_PATH + "/cross_" + std::to_string(cont)
 						+ "_high_genus.txt");
 				}
 
@@ -741,7 +752,7 @@ void Evolution::Crossover(const int& cont)
 
 
 	//// Selected ids
-	//std::ofstream select_cout(PATH_CROSSOVER + "\\0_cross.txt");
+	//std::ofstream select_cout(PATH_CROSSOVER + "/0_cross.txt");
 	//for (size_t i = 0; i < cross_pair.size(); i++)
 	//{
 	//	select_cout << cross_pair[i].first << " " << cross_pair[i].second << std::endl;
@@ -752,7 +763,7 @@ void Evolution::Crossover(const int& cont)
 	//// Segmentation
 	//for (size_t i = n_population; i < pop_seg_.size(); i++)
 	//{
-	//	pop_seg_[i].OutputSeg(PATH_CROSSOVER + "\\seg_" + std::to_string(i - n_population) + ".txt");
+	//	pop_seg_[i].OutputSeg(PATH_CROSSOVER + "/seg_" + std::to_string(i - n_population) + ".txt");
 	//}
 
 	//OutputCrossover();
@@ -825,8 +836,8 @@ bool Evolution::ElitistReinsert(const int& cont)
 
 			if (before_seg.HighGenus() || after_seg.HighGenus())
 			{
-				before_seg.OutputSeg(ROOT_PATH + "\\archive_before_" + std::to_string(change_type_[i]) + ".txt");
-				after_seg.OutputSeg(ROOT_PATH + "\\archive_after" + std::to_string(cont)
+				before_seg.OutputSeg(ROOT_PATH + "/archive_before_" + std::to_string(change_type_[i]) + ".txt");
+				after_seg.OutputSeg(ROOT_PATH + "/archive_after" + std::to_string(cont)
 					+ "_high_genus.txt");
 			}
 		}
@@ -860,13 +871,14 @@ void Evolution::PopVector(std::vector<Individual*>& vec)
 	}
 }
 
+#if 0
 int FilesRead(std::string root, std::vector<std::string>& fileVec)
 {
 	int Nums = 0;
 	long long handle = 0;
 	struct _finddata_t fileinfo;
 	std::string temp_str;
-	if ((handle = _findfirst(temp_str.assign(root).append("\\*").c_str(), &fileinfo)) != -1)
+	if ((handle = _findfirst(temp_str.assign(root).append("/*").c_str(), &fileinfo)) != -1)
 	{
 		do
 		{
@@ -882,7 +894,7 @@ int FilesRead(std::string root, std::vector<std::string>& fileVec)
 					if (fileinfo.size == 0)
 						throw - 1;
 					else
-						fileVec.push_back(temp_str.assign(root).append("\\").append(fileinfo.name));
+						fileVec.push_back(temp_str.assign(root).append("/").append(fileinfo.name));
 				}
 				catch (int e)
 				{
@@ -900,6 +912,7 @@ int FilesRead(std::string root, std::vector<std::string>& fileVec)
 	else
 		return 0;
 }
+#endif
 
 void Evolution::EdgeLength()
 {
@@ -1107,7 +1120,7 @@ void Evolution::InitialPopulation()
 
 		vsa_cone.UpdateCone(cone_list_list[i - 1]);
 
-		//vsa_cone.OutputCone(ROOT_PATH + "\\cone_" + std::to_string(N_CONE_STEP * i) + ".txt");
+		//vsa_cone.OutputCone(ROOT_PATH + "/cone_" + std::to_string(N_CONE_STEP * i) + ".txt");
 
 		for (int j = 0; j < N_VSA_COEFF; j++)
 		{
@@ -1131,7 +1144,7 @@ void Evolution::InitialPopulation()
 		topo_mesh.SetSeam(initial_[i]->seam_status_);
 		if (topo_mesh.HighGenus())
 		{
-			topo_mesh.OutputSeg(ROOT_PATH + "\\init_" + std::to_string(i)
+			topo_mesh.OutputSeg(ROOT_PATH + "/init_" + std::to_string(i)
 				+ "_high_genus.txt");
 		}
 	}
@@ -1197,7 +1210,7 @@ void Evolution::ComputeFixedCone()
 		//	}
 		//} while (true);
 
-		std::ofstream output_large(ROOT_PATH + "\\large_cone_size.txt");
+		std::ofstream output_large(ROOT_PATH + "/large_cone_size.txt");
 		output_large.close();
 		
 		exit(EXIT_FAILURE);
@@ -1227,7 +1240,7 @@ void Evolution::ComputeFixedCone()
 		energy_array_[i]->SetBound(DISTORTION_BOUND);
 	}
 
-	std::ofstream max_cone_file(ROOT_PATH + "\\max_cone_" 
+	std::ofstream max_cone_file(ROOT_PATH + "/max_cone_" 
 		+ std::to_string(N_CONE_STEP * N_CONE_COEFF) + ".txt");
 	for (size_t i = 0; i < cone_list.size(); i++)
 	{
@@ -1235,7 +1248,7 @@ void Evolution::ComputeFixedCone()
 	}
 	max_cone_file.close();
 
-	std::ofstream cone_file(ROOT_PATH + "\\cone_" 
+	std::ofstream cone_file(ROOT_PATH + "/cone_" 
 		+ std::to_string(DISTORTION_BOUND) + ".txt");
 	for (size_t i = 0; i < constraint_list_.size(); i++)
 	{
@@ -1302,11 +1315,11 @@ void Evolution::OutputInitial()
 	for (size_t i = 0; i < initial_.size(); i++)
 	{
 		seg_mesh.SetSeam(initial_[i]->seam_status_);
-		seg_mesh.OutputSeg(PATH_INITIAL + "\\seg_" + std::to_string(i) + ".txt");
+		seg_mesh.OutputSeg(PATH_INITIAL + "/seg_" + std::to_string(i) + ".txt");
 	}
 
 	// Fitness
-	std::ofstream fit_cout(PATH_INITIAL + "\\0_initial_fitness.txt");
+	std::ofstream fit_cout(PATH_INITIAL + "/0_initial_fitness.txt");
 	for (size_t i = 0; i < initial_.size(); i++)
 	{
 		fit_cout << i
@@ -1327,9 +1340,9 @@ void Evolution::OutputArchive()
 	for (size_t i = 0; i < archive_.size(); i++)
 	{
 		seg_mesh.SetSeam(archive_[i]->seam_status_);
-		seg_mesh.OutputSeg(PATH_ARCHIVE + "\\seg_" + std::to_string(i) + ".txt");
+		seg_mesh.OutputSeg(PATH_ARCHIVE + "/seg_" + std::to_string(i) + ".txt");
 
-		std::ofstream cone_cout(PATH_ARCHIVE + "\\z_cone_" + std::to_string(i) + ".txt");
+		std::ofstream cone_cout(PATH_ARCHIVE + "/z_cone_" + std::to_string(i) + ".txt");
 		const std::vector<bool>& cone_status = archive_[i]->cone_status_;
 		for (int i = 0; i < cone_status.size(); i++)
 		{
@@ -1342,7 +1355,7 @@ void Evolution::OutputArchive()
 	}
 
 	// Fitness
-	std::ofstream fit_cout(PATH_ARCHIVE + "\\0_archive_fitness.txt");
+	std::ofstream fit_cout(PATH_ARCHIVE + "/0_archive_fitness.txt");
 	for (size_t i = 0; i < archive_.size(); i++)
 	{
 		fit_cout << i
@@ -1361,7 +1374,7 @@ void Evolution::OutputArchive()
 void Evolution::OutputSelection()
 {
 	// Selected ids
-	std::ofstream select_cout(PATH_SELECTION + "\\0_selection.txt");
+	std::ofstream select_cout(PATH_SELECTION + "/0_selection.txt");
 	for (size_t i = 0; i < parent_.size(); i++)
 	{
 		select_cout << parent_[i] <<std::endl;
@@ -1372,9 +1385,9 @@ void Evolution::OutputSelection()
 	for (size_t i = 0; i < pop_seg_.size(); i++)
 	{
 		pop_seg_[i].OutputSeg(
-			PATH_SELECTION + "\\seg_" + std::to_string(i) + ".txt");
+			PATH_SELECTION + "/seg_" + std::to_string(i) + ".txt");
 
-		std::ofstream cone_cout(PATH_SELECTION + "\\z_cone_" + std::to_string(i) + ".txt");
+		std::ofstream cone_cout(PATH_SELECTION + "/z_cone_" + std::to_string(i) + ".txt");
 		const std::vector<bool>& cone_status = pop_seg_[i].ReturnCone();
 		for (int i = 0; i < cone_status.size(); i++)
 		{
@@ -1390,7 +1403,7 @@ void Evolution::OutputSelection()
 void Evolution::OutputMutation()
 {
 	// Selected ids
-	std::ofstream select_cout(PATH_MUTATION + "\\0_mutation.txt");
+	std::ofstream select_cout(PATH_MUTATION + "/0_mutation.txt");
 	for (size_t i = 0; i < parent_.size(); i++)
 	{
 		select_cout << parent_[i] << std::endl;
@@ -1400,9 +1413,9 @@ void Evolution::OutputMutation()
 	// Segmentation
 	for (size_t i = 0; i < pop_seg_.size(); i++)
 	{
-		pop_seg_[i].OutputSeg(PATH_MUTATION + "\\seg_" + std::to_string(i) + ".txt");
+		pop_seg_[i].OutputSeg(PATH_MUTATION + "/seg_" + std::to_string(i) + ".txt");
 
-		std::ofstream cone_cout(PATH_MUTATION + "\\z_cone_" + std::to_string(i) + ".txt");
+		std::ofstream cone_cout(PATH_MUTATION + "/z_cone_" + std::to_string(i) + ".txt");
 		const std::vector<bool>& cone_status = pop_seg_[i].ReturnCone();
 		for (int i = 0; i < cone_status.size(); i++)
 		{
@@ -1414,7 +1427,7 @@ void Evolution::OutputMutation()
 		cone_cout.close();
 	}
 
-	std::ofstream change_cout(PATH_MUTATION + "\\0_change_type.txt");
+	std::ofstream change_cout(PATH_MUTATION + "/0_change_type.txt");
 	for (size_t i = 0; i < change_type_.size(); i++)
 	{
 		change_cout << i << " " << change_type_[i] << std::endl;
@@ -1427,7 +1440,7 @@ void Evolution::OutputCrossover()
 	// Segmentation
 	for (size_t i = 0; i < pop_seg_.size(); i++)
 	{
-		pop_seg_[i].OutputSeg(PATH_CROSSOVER + "\\seg_" + std::to_string(i) + ".txt");
+		pop_seg_[i].OutputSeg(PATH_CROSSOVER + "/seg_" + std::to_string(i) + ".txt");
 	}
 }
 
@@ -1440,12 +1453,12 @@ void Evolution::OutputPopulation()
 		if (!population_[i]) continue;
 
 		seg_mesh.SetSeam(population_[i]->seam_status_);
-		seg_mesh.OutputSeg(PATH_POPULATION + "\\seg_" + std::to_string(i) + ".txt");
+		seg_mesh.OutputSeg(PATH_POPULATION + "/seg_" + std::to_string(i) + ".txt");
 	}
 
 	// Fitness
 	std::ofstream fit_cout(PATH_POPULATION 
-		+ "\\0_population_fitness.txt");
+		+ "/0_population_fitness.txt");
 	for (size_t i = 0; i < population_.size(); i++)
 	{
 		if (!population_[i]) continue;
@@ -1461,7 +1474,7 @@ void Evolution::OutputPopulation()
 	fit_cout.close();
 
 	// Selected ids
-	std::ofstream change_cout(PATH_POPULATION + "\\0_change_type.txt");
+	std::ofstream change_cout(PATH_POPULATION + "/0_change_type.txt");
 	for (size_t i = 0; i < change_type_.size(); i++)
 	{
 		change_cout << i << " " << change_type_[i] << std::endl;
