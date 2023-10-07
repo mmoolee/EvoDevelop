@@ -104,7 +104,8 @@ private:
 	//int N_VSA_STEP = 40; // 47094
 	int N_VSA_STEP = 10;
 
-	const int N_CORE = 6;
+	//const int N_CORE = 6;
+	const int N_CORE = 56;
 	const int N_CONE_COEFF = 2 * N_CORE;
 
 	double DECREASE_STEP = 1.1;

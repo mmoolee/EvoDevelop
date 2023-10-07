@@ -3,6 +3,7 @@
 #include <Windows.h>
 #endif
 #include <ctime>
+#include <format>
 
 const double CURVATURE_THESHOLD = 1e-4;
 const double SMALL_ARGCONE = 0.025;
@@ -26,6 +27,8 @@ std::vector<int> VSA_cone::GenerateCone(double cone_coeff)
 	cone_flat.initCoef(cone_coeff);
 	cone_flat.geneCone(conesK);
 
+	//std::cout << std::format("cones K size: {}", conesK.size()) << std::endl;
+
 	cone_list.clear();
 	for (int i = 0; i < conesK.size(); i++)
 	{
@@ -35,13 +38,15 @@ std::vector<int> VSA_cone::GenerateCone(double cone_coeff)
 		}
 	}
 
+	//std::cout << std::format("initial cone list size: {}", cone_list.size()) << std::endl;
+
 	// Merge the adjacent cones
 	for (size_t i = 0; i < cone_list.size(); i++)
 	{
+		//std::cout << std::format("merge adjacent cones: {}/{}...", i, cone_list.size()) << std::endl;
 		for (size_t j = i + 1; j < cone_list.size(); j++)
 		{
-			for (const VH& vv : mesh_.vv_range(
-				mesh_.vertex_handle(cone_list[i])))
+			for (const VH& vv : mesh_.vv_range(mesh_.vertex_handle(cone_list[i])))
 			{
 				if (vv.idx() == cone_list[j])
 				{
@@ -50,6 +55,8 @@ std::vector<int> VSA_cone::GenerateCone(double cone_coeff)
 			}
 		}
 	}
+
+	//std::cout << std::format("merged cone list size: {}", cone_list.size()) << std::endl;
 
 	// Remove same idx
 	std::sort(cone_list.begin(), cone_list.end());

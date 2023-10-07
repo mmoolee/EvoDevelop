@@ -1,4 +1,6 @@
 #include "Evolution.h"
+#include <filesystem>
+#include <format>
 #include <omp.h>
 
 const int N_ARCHIVE = 50;
@@ -1163,12 +1165,14 @@ void Evolution::ComputeFixedCone()
 	VSA_cone vsa_cone(mesh_);
 	std::vector<int> cone_list;
 
+	std::cout << std::format("GenerateCone...") << std::endl;
 	constraint_list_ = vsa_cone.GenerateCone(DISTORTION_BOUND);
 	if (constraint_list_.size() < N_CONE_THRESHOLD)
 	{
 		int cont = 0;
 		do
 		{
+			std::cout << std::format("GenerateCone iter {}", cont + 1) << std::endl;
 			cone_list = vsa_cone.GenerateCone(N_CONE_STEP * N_CONE_COEFF);
 			constraint_list_ = vsa_cone.GenerateCone(DISTORTION_BOUND);
 
