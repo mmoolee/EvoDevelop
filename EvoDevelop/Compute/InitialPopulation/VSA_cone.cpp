@@ -1,5 +1,7 @@
 #include "VSA_cone.h"
+#ifdef WIN32
 #include <Windows.h>
+#endif
 #include <ctime>
 
 const double CURVATURE_THESHOLD = 1e-4;

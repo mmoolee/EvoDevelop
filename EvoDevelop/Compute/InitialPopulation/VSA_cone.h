@@ -2,7 +2,7 @@
 #include <fstream>
 #include "../MeshDefinition.h"
 #include "ConesFlattening.h"
-#include "Kruskal\Auxiliary.h"
+#include "Kruskal/Auxiliary.h"
 
 class VSA_cone
 {

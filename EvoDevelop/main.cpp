@@ -1,6 +1,6 @@
-#include "Compute\Evolution.h"
+#include "Compute/Evolution.h"
 #include <chrono>
-#include <io.h>
+#include <filesystem>
 
 const int INPUT_NUM = 4;
 const std::string INPUT_OBJ = "[INPUT_OBJ]";
@@ -53,6 +53,7 @@ void parseArgs(int argc, const char* argv[], std::string& obj, std::string& outp
 	}
 }
 
+#if 0
 int FilePathsRead(std::string root, std::vector<std::string>& fileVec)
 {
 	int Nums = 0;
@@ -80,6 +81,7 @@ int FilePathsRead(std::string root, std::vector<std::string>& fileVec)
 	else
 		return 0;
 }
+#endif
 
 void AreaScaling(Mesh& mesh)
 {
@@ -129,11 +131,18 @@ int main(int argc, const char* argv[])
 	srand(0);
 
 	// Output path
+#if 0
 	if (_access(out_path.c_str(), 0) == -1)
 	{
 		std::string cmd = "mkdir " + out_path;
 		system(cmd.c_str());
 	}
+#else
+	if (!std::filesystem::exists(out_path))
+	{
+		std::filesystem::create_directory(out_path);
+	}
+#endif
 
 	Evolution evo_dev(input_mesh);
 	evo_dev.DebugPath(out_path);
@@ -143,7 +152,7 @@ int main(int argc, const char* argv[])
 	auto duration = std::chrono::duration_cast
 		<std::chrono::microseconds>(end_time - start_time);
 
-	std::ofstream output_time(out_path + "\\time.txt");
+	std::ofstream output_time(out_path + "/time.txt");
 	output_time << double(duration.count())
 		* std::chrono::microseconds::period::num
 		/ std::chrono::microseconds::period::den << std::endl;

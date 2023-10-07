@@ -1,7 +1,7 @@
 #pragma once
 #include "Individual.h"
 #include "TopoChange.h"
-#include "InitialPopulation\VSA_cone.h"
+#include "InitialPopulation/VSA_cone.h"
 #include "EnergyUpdate.h"
 
 // Segment
@@ -88,12 +88,12 @@ private:
 
 	std::string ROOT_PATH = "debug_output";
 
-	std::string PATH_INITIAL = "\\initial";
-	std::string PATH_ARCHIVE = "\\archive";
-	std::string PATH_SELECTION = "\\selection";
-	std::string PATH_CROSSOVER = "\\crossover";
-	std::string PATH_MUTATION = "\\mutation";
-	std::string PATH_POPULATION = "\\population";
+	std::string PATH_INITIAL = "/initial";
+	std::string PATH_ARCHIVE = "/archive";
+	std::string PATH_SELECTION = "/selection";
+	std::string PATH_CROSSOVER = "/crossover";
+	std::string PATH_MUTATION = "/mutation";
+	std::string PATH_POPULATION = "/population";
 
 	int N_TRI_REMOVE = 5;
 	int INIT_MIN_NUM = 300;
